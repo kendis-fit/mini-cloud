@@ -4,12 +4,6 @@ export const itemSchema = new Schema({
     name: {
         type: String,
         required: Boolean
-    },
-    icon: {
-        type: String
-    },
-    extension: {
-        type: String
     }
 },
 {

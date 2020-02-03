@@ -1,10 +1,29 @@
+const fs = require("fs");
+const multer = require("multer");
 const express = require("express");
 
 const item = require("../models/item").default;
 const store = require("../models/store").default;
 
-const storeRoute = express.Router();
 const json = express.json;
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (req, file, callback) => {
+            const id = req.params.id;
+            const path = `${__dirname}/stores/${id}`;
+            if (!fs.existsSync(path)) {
+                fs.mkdirSync(path);
+            }
+            callback(null, path);
+        },
+        filename: (req, file, callback) => {
+            const itemId = req.params.itemId;
+
+            callback(null, itemId + file.originalname);
+        }
+    })
+});
+const storeRoute = express.Router();
 
 storeRoute.get("/:id", async (req, res) => {
     try
@@ -36,22 +55,6 @@ storeRoute.post("/", (req, res) => {
     }
 });
 
-storeRoute.post("/:id/items", json, (req, res) => {
-    try
-    {
-        const { name } = req.body;
-
-        const icon = ""; // TO DO: name of icon
-
-        const newItem = new item({ name, icon });
-        res.status(201).send({ id: newItem._id });
-    }
-    catch
-    {
-        res.sendStatus(500);
-    }
-});
-
 storeRoute.get("/:id/items/:itemId", async (req, res) => {
     try
     {
@@ -64,6 +67,49 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
             res.sendStatus(404);
         } else {
             res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId + itemAsFile.extension}`);
+        }
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
+storeRoute.post("/:id/items", json, (req, res) => {
+    try
+    {
+        const { name } = req.body;
+
+        const icon = ""; // TO DO: name of icon
+
+        const newItem = new item({ name, icon });
+
+        // TO DO
+
+
+        res.status(201).send({ id: newItem._id });
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
+storeRoute.post("/:id/items/:itemId", upload.single("file"), async (req, res) => {
+    try
+    {
+        const file = req.file;
+        
+        if (!file)
+        {
+            const itemId = req.params.itemId;
+
+            await item.findOneAndDelete({ id: itemId });
+            res.sendStatus(400);
+        }
+        else
+        {
+            res.sendStatus(201);
         }
     }
     catch
