@@ -1,3 +1,5 @@
+require("../helpers/stringExtensions");
+
 const fs = require("fs");
 const multer = require("multer");
 const express = require("express");
@@ -5,21 +7,20 @@ const express = require("express");
 const item = require("../models/item").default;
 const store = require("../models/store").default;
 
-const json = express.json;
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            const id = req.params.id;
+            const { id, itemId } = req.params;
             const path = `${__dirname}/stores/${id}`;
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
+            new item({ name: itemId + "." + file.originalname.extension(), icon: file.originalname.extension() + ".png" });
             callback(null, path);
         },
         filename: (req, file, callback) => {
             const itemId = req.params.itemId;
-
-            callback(null, itemId + file.originalname);
+            callback(null, itemId + "." + file.originalname.extension());
         }
     })
 });
@@ -68,26 +69,6 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
         } else {
             res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId + itemAsFile.extension}`);
         }
-    }
-    catch
-    {
-        res.sendStatus(500);
-    }
-});
-
-storeRoute.post("/:id/items", json, (req, res) => {
-    try
-    {
-        const { name } = req.body;
-
-        const icon = ""; // TO DO: name of icon
-
-        const newItem = new item({ name, icon });
-
-        // TO DO
-
-
-        res.status(201).send({ id: newItem._id });
     }
     catch
     {
