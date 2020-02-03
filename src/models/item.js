@@ -7,6 +7,9 @@ export const itemSchema = new Schema({
     },
     icon: {
         type: String
+    },
+    extension: {
+        type: String
     }
 },
 {
