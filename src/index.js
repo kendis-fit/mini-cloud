@@ -17,7 +17,9 @@ const storeRoute = require("./routes/storeRoute");
 
 const app = express();
 
-mongoose.connect(connectionString, err => {
+mongoose.connect(connectionString, {
+    dbName: "StoreDB"
+}, err => {
     if (err) {
         console.log(err);
         process.exit(1);
