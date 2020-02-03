@@ -1,0 +1,14 @@
+{
+  "name": "mini-cloud-back-end",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "start": "node ./src/index.js"
+  },
+  "author": "Kurt Endless",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.8.11"
+  }
+}
