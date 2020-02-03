@@ -1,10 +1,11 @@
 require("dotenv").config();
 
 const port = process.env["PORT"];
+const connectionString = process.env["CONNECTION_STRING"];
 
-if (!port)
+if (!port || !connectionString)
 {
-    console.log("you have to add variable PORT to environment variables");
+    console.log("you have to add variable PORT and CONNECTION_STRING to environment variables");
     process.exit(1);
 }
 
@@ -15,6 +16,13 @@ const itemRoute = require("./routes/itemRoute");
 const storeRoute = require("./routes/storeRoute");
 
 const app = express();
+
+mongoose.connect(connectionString, err => {
+    if (err) {
+        console.log(err);
+        process.exit(1);
+    }
+});
 
 app.use(express.static(`${__dirname}/images`));
 
