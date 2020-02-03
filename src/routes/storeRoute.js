@@ -41,10 +41,30 @@ storeRoute.post("/:id/items", json, (req, res) => {
     {
         const { name } = req.body;
 
-        const item = ""; // TO DO: name of icon
+        const icon = ""; // TO DO: name of icon
 
-        const newItem = new item({ name });
+        const newItem = new item({ name, icon });
         res.status(201).send({ id: newItem._id });
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
+storeRoute.get("/:id/items/:itemId", async (req, res) => {
+    try
+    {
+        const { id, itemId } = req.params;
+
+        const projection = { _id: 0, extension: 1 };
+        const itemAsFile = await item.findOne({ _id: itemId }, projection).lean().exec();
+
+        if (!itemAsFile) {
+            res.sendStatus(404);
+        } else {
+            res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId + itemAsFile.extension}`);
+        }
     }
     catch
     {
