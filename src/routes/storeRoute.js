@@ -23,7 +23,18 @@ storeRoute.get("/:id", async (req, res) => {
     }
 });
 
-storeRoute.post("/")
+storeRoute.post("/", (req, res) => {
+    try
+    {
+        const newStore = new store();
+        res.status(200).send({ id: newStore._id }); 
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
 storeRoute.get("/:id/");
 storeRoute.post("/:id/items");
 
