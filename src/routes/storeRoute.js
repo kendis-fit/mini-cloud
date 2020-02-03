@@ -4,6 +4,7 @@ const item = require("../models/item").default;
 const store = require("../models/store").default;
 
 const storeRoute = express.Router();
+const json = express.json;
 
 storeRoute.get("/:id", async (req, res) => {
     try
@@ -27,7 +28,7 @@ storeRoute.post("/", (req, res) => {
     try
     {
         const newStore = new store();
-        res.status(200).send({ id: newStore._id }); 
+        res.status(201).send({ id: newStore._id }); 
     }
     catch
     {
@@ -35,7 +36,20 @@ storeRoute.post("/", (req, res) => {
     }
 });
 
-storeRoute.get("/:id/");
-storeRoute.post("/:id/items");
+storeRoute.post("/:id/items", json, (req, res) => {
+    try
+    {
+        const { name } = req.body;
+
+        const item = ""; // TO DO: name of icon
+
+        const newItem = new item({ name });
+        res.status(201).send({ id: newItem._id });
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
 
 export default storeRoute;
