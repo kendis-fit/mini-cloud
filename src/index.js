@@ -12,7 +12,6 @@ if (!port || !connectionString)
 const express = require("express");
 const mongoose = require("mongoose");
 
-const itemRoute = require("./routes/itemRoute");
 const storeRoute = require("./routes/storeRoute");
 
 const app = express();
@@ -29,7 +28,6 @@ mongoose.connect(connectionString, {
 app.use(express.static(`${__dirname}/images`));
 
 app.use("/stores", storeRoute);
-app.use("/items", itemRoute);
 
 app.listen(port, () => {
     console.log(`Server has bee running by port ${port}`);
