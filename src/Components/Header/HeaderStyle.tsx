@@ -15,15 +15,6 @@ export const BlockHeader = styled.header`
     justify-content: space-around;
 `;
 
-export const SearchButton = styled.button`
-    border: 0;
-    background: transparent;
-
-    cursor: pointer;
-
-    padding-right: 5px;
-`;
-
 export const SearchTextBox = styled.input`
     border: 0;
     background: ${Colors.Pink};
@@ -34,4 +25,19 @@ export const SearchTextBox = styled.input`
     ::placeholder {
         opacity: 1;
     }
+
+    padding-left: 5px;
+`;
+
+export const HashBox = styled.input.attrs(() => ({ readOnly: true }))`
+    margin-right: 5px;
+    padding: 5px;
+
+    border-radius: 5px;
+    border: 0;
+
+    height: 25px;
+    width: 300px;
+
+    color: gray;
 `;
