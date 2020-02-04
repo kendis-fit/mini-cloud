@@ -1,9 +1,13 @@
 import React from "react";
 
+import Store from "./Store/Store";
+import Header from "./Header/Header";
+
 const App = () => {
     return(
         <div>
-            Hello
+            <Header />
+            <Store />
         </div>
     );
 }
