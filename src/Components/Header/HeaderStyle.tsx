@@ -15,8 +15,23 @@ export const BlockHeader = styled.header`
     justify-content: space-around;
 `;
 
+export const SearchButton = styled.button`
+    border: 0;
+    background: transparent;
+
+    cursor: pointer;
+
+    padding-right: 5px;
+`;
+
 export const SearchTextBox = styled.input`
     border: 0;
     background: ${Colors.Pink};
     color: white;
+
+    font-size: 16px;
+
+    ::placeholder {
+        opacity: 1;
+    }
 `;

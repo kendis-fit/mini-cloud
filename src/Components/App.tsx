@@ -7,10 +7,10 @@ import "../root.css";
 
 const App = () => {
     return(
-        <div>
+        <main>
             <Header />
             <Store />
-        </div>
+        </main>
     );
 }
 
