@@ -3,12 +3,15 @@ import React from "react";
 import HashBar from "./HashBar";
 import SearchBar from "./SearchBar";
 
+import { BlockHeader } from "./HeaderStyle";
+
 const Header = () => {
     return(
-        <div>
+        <BlockHeader>
+            <div>Mini-store</div>
             <HashBar />
             <SearchBar />
-        </div>
+        </BlockHeader>
     )
 };
 

@@ -1,3 +1,3 @@
 export default {
-    Header: "120px"
+    HeaderHeight: "70px"
 }
