@@ -1,15 +1,14 @@
 import React from "react";
 
-import HashBar from "./HashBar";
-import SearchBar from "./SearchBar";
-
+import MenuBar from "./MenuBar/MenuBar";
+import SearchBar from "./SearchBar/SearchBar";
 import { BlockHeader } from "./HeaderStyle";
 
 const Header = () => {
     return(
         <BlockHeader>
             <div>Mini-store</div>
-            <HashBar />
+            <MenuBar />
             <SearchBar />
         </BlockHeader>
     )

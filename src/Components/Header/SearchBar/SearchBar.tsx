@@ -1,9 +1,9 @@
 import React from "react";
 
-import { FlexBlock } from "../Styles/Block";
 import search from "../../Images/search.png";
-import { ButtonWithImage } from "../Styles/Button";
-import { SearchTextBox } from "../Header/HeaderStyle";
+import { FlexBlock } from "../../Styles/Block";
+import { SearchTextBox } from "./SearchBarStyle";
+import { ButtonWithImage } from "../../Styles/Button";
 
 const SearchBar = () => {
     return(
