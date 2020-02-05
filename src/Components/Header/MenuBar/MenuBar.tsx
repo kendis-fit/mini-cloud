@@ -1,9 +1,11 @@
 import React from "react";
 
+import { ButtonGenerate } from "./MenuBarStyle";
+
 const Menu = () => {
     return(
         <nav>
-            <button>Generate hash</button>
+            <ButtonGenerate>Generate hash</ButtonGenerate>
         </nav>
     );
 }
