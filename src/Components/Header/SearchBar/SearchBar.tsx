@@ -1,6 +1,6 @@
 import React from "react";
 
-import search from "../../Images/search.png";
+import search from "../../../Images/search.png";
 import { FlexBlock } from "../../Styles/Block";
 import { SearchTextBox } from "./SearchBarStyle";
 import { ButtonWithImage } from "../../Styles/Button";
