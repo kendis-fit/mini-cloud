@@ -35,12 +35,12 @@ export default class StoreApi
         return async (dispatch: any) => {
             try
             {
-                const response = await fetch(`${process.env["REACT_APP_API"]}/${Id}`);
+                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${Id}`);
 
                 if (response.status === 200)
                 {
                     const result = await response.json();
-                    dispatch(InitStore(result));
+                    dispatch(InitStore({ Id, Items: result }));
                 }
                 else if (response.status === 404)
                 {

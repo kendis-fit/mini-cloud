@@ -13,7 +13,7 @@ export const AddItem = (Item: IStoreItem): StoreTypes => ({
     value: Item
 });
 
-export const InitStore = (Items: IStore): StoreTypes => ({
+export const InitStore = (Store: IStore): StoreTypes => ({
     type: INIT_STORE,
-    value: Items
+    value: Store
 });
