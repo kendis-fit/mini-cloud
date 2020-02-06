@@ -12,6 +12,7 @@ if (!port || !connectionString)
 const express = require("express");
 const mongoose = require("mongoose");
 
+const cors = require("./middlewares/cors");
 const storeRoute = require("./routes/storeRoute");
 
 const app = express();
@@ -27,8 +28,8 @@ mongoose.connect(connectionString, {
     }
 });
 
+app.use(cors);
 app.use("/images", express.static(`${__dirname}/images`));
-
 app.use("/stores", storeRoute);
 
 app.listen(port, () => {
