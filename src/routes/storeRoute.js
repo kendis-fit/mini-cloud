@@ -10,7 +10,7 @@ const { store } = require("../models/store");
 const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
-            const { id, itemId } = req.params;
+            const { id } = req.params;
             const path = `${__dirname}/stores/${id}`;
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
@@ -67,7 +67,7 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
         if (!itemAsFile) {
             res.sendStatus(404);
         } else {
-            res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId + itemAsFile.extension}`);
+            res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId}.${itemAsFile.icon}`);
         }
     }
     catch
