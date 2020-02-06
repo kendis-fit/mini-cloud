@@ -1,3 +1,7 @@
 import { combineReducers } from "redux";
 
-export default combineReducers({});
+import Store from "./Store/Store";
+
+export default combineReducers({
+    Store
+});
