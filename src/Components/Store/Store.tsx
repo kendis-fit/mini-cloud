@@ -8,7 +8,7 @@ const Store = () => {
     return(
         <BlockStore>
             <StoreItem name="lol.svgfdsfdfsdfdsfdsfsdfnsdkjfndslkfndslnfeufensjds;flksd" icon="svg"  />
-            <AddItem />
+            <AddItem Id="fdfdsfsd" />
         </BlockStore>
     )
 };

@@ -20,4 +20,8 @@ export const BlockItem = styled(BaseBlockItem)`
         text-decoration: underline;
         cursor: pointer;
     }
+
+    input[type='file'] {
+        display: none;
+    }
 `;
