@@ -1,10 +1,14 @@
 import React from "react";
 
+import StoreItem from "./StoreItem";
+import { BlockStore } from "./StoreStyle";
+
 const Store = () => {
     return(
-        <div>
-            
-        </div>
+        <BlockStore>
+            <StoreItem name="lol.svgfdsfdfsdfdsfdsfsdfnsdkjfndslkfndslnfeufensjds;flksd" icon="svg"  />
+
+        </BlockStore>
     )
 };
 

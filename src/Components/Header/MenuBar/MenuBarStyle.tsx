@@ -9,6 +9,7 @@ export const ButtonGenerate = styled.button`
     color: white;
 
     font-size: 16px;
+    font-weight: bold;
 
     padding: 10px;
 
