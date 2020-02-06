@@ -3,7 +3,7 @@ import React, { createRef } from "react";
 import copy from "../../Images/copy.png";
 import { HashBox, BlockHashBox } from "./HashBarStyle";
 import { FlexBlock } from "../Styles/Block";
-import IHashProps from "./Interfaces/IHashProps";
+import IHashProps from "./Interfaces/IHash";
 import { ButtonWithImage  } from "../Styles/Button";
 
 const HashBar = (props: IHashProps) => {
@@ -22,7 +22,7 @@ const HashBar = (props: IHashProps) => {
     return(
         <>
         {   
-            props.Visible &&
+            props.Value &&
                 <BlockHashBox>
                     <FlexBlock>
                         <HashBox ref={hash} type="text" value={props.Value} />

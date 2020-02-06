@@ -3,7 +3,6 @@ import { CREATE_STORE } from "../../Constants/Actions";
 import IStore from "../../Components/Store/Interfaces/IStore";
 
 const initStore: IStore = {
-    Id: null,
     Items: []
 }
 

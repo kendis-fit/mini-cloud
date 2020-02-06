@@ -1,7 +1,7 @@
 import React from "react";
 
 import Header from "./Header/Header";
-import HashBar from "./HashBar/HashBar";
+import HashBarContainer from "./HashBar/HashBarContainer";
 import StoreContainer from "./Store/StoreContainer";
 
 import "../root.css";
@@ -10,7 +10,7 @@ const App = () => {
     return(
         <main>
             <Header />
-            <HashBar Visible={true} Value={"43249u35rkjterlkjhglske12qw2"} />
+            <HashBarContainer />
             <StoreContainer />
         </main>
     );
