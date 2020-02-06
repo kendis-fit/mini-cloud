@@ -1,6 +1,6 @@
 import React from "react";
 
-import StoreItem from "./StoreItem";
+import StoreItem from "./StoreItem/StoreItem";
 import { BlockStore } from "./StoreStyle";
 
 const Store = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { BlockItem } from "./StoreStyle";
-import IStoreItem from "./Interfaces/IStoreItem";
+import { BlockItem } from "./StoreItemStyle";
+import IStoreItem from "../Interfaces/IStoreItem";
 
 const StoreItem = (props: IStoreItem) => {
     return(
