@@ -4,8 +4,8 @@ const fs = require("fs");
 const multer = require("multer");
 const express = require("express");
 
-const item = require("../models/item").default;
-const store = require("../models/store").default;
+const { item } = require("../models/item");
+const { store } = require("../models/store");
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -99,4 +99,4 @@ storeRoute.post("/:id/items/:itemId", upload.single("file"), async (req, res) =>
     }
 });
 
-export default storeRoute;
+module.exports = storeRoute;

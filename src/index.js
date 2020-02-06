@@ -17,7 +17,9 @@ const storeRoute = require("./routes/storeRoute");
 const app = express();
 
 mongoose.connect(connectionString, {
-    dbName: "StoreDB"
+    dbName: "StoreDB",
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 }, err => {
     if (err) {
         console.log(err);
@@ -25,7 +27,7 @@ mongoose.connect(connectionString, {
     }
 });
 
-app.use(express.static(`${__dirname}/images`));
+app.use("/images", express.static(`${__dirname}/images`));
 
 app.use("/stores", storeRoute);
 

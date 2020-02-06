@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
+const { model, Schema } = require("mongoose");
 
-export const itemSchema = new Schema({
+const itemSchema = new Schema({
     name: {
         type: String,
         required: Boolean
@@ -16,4 +16,6 @@ export const itemSchema = new Schema({
 
 const item = model("item", itemSchema);
 
-export default item;
+module.exports = {
+    item, itemSchema
+}
