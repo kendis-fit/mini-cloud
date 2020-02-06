@@ -1,6 +1,6 @@
-import IStore from "./Interfaces/IStore";
 import { StoreTypes } from "../../Constants/Types";
 import { CREATE_STORE } from "../../Constants/Actions";
+import IStore from "../../Components/Store/Interfaces/IStore";
 
 const initStore: IStore = {
     Id: null,

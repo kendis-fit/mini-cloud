@@ -7,7 +7,6 @@ import { BlockStore } from "./StoreStyle";
 const Store = () => {
     return(
         <BlockStore>
-            <StoreItem name="lol.svgfdsfdfsdfdsfdsfsdfnsdkjfndslkfndslnfeufensjds;flksd" icon="svg"  />
             <AddItem Id="fdfdsfsd" />
         </BlockStore>
     )
