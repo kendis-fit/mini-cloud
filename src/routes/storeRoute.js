@@ -15,7 +15,6 @@ const upload = multer({
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
-            new item({ name: itemId + "." + file.originalname.extension(), icon: file.originalname.extension() + ".png" });
             callback(null, path);
         },
         filename: (req, file, callback) => {
@@ -25,6 +24,7 @@ const upload = multer({
     })
 });
 const storeRoute = express.Router();
+const json = express.json();
 
 storeRoute.get("/:id", async (req, res) => {
     try
@@ -68,6 +68,23 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
             res.sendStatus(404);
         } else {
             res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId + itemAsFile.extension}`);
+        }
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
+storeRoute.post("/:id/items", json, (req, res) => {
+    try
+    {
+        const { name } = req.body;
+
+        const newId = new item({ name, icon: name.extension() });
+        if (newId)
+        {
+            res.status(201).send(newId._id);
         }
     }
     catch
