@@ -1,6 +1,7 @@
 require("../helpers/stringExtensions");
 
 const fs = require("fs");
+const mongoose = require("mongoose");
 const multer = require("multer");
 const express = require("express");
 
@@ -11,7 +12,7 @@ const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
             const { id } = req.params;
-            const path = `${__dirname}/stores/${id}`;
+            const path = `${__dirname}/../stores/${id}`;
             if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
             }
@@ -30,9 +31,8 @@ storeRoute.get("/:id", async (req, res) => {
     try
     {
         const id = req.params.id;
-        const projection = { _id: 0 };
-        const storeDTO = await store.findOne({ _id: id }, projection).lean().exec();
-        if (!storeDTO.items.length === 0) {
+        const storeDTO = await store.findOne({ _id: mongoose.Types.ObjectId(id)}).lean().exec();
+        if (!storeDTO || !storeDTO.items.length === 0) {
             res.sendStatus(404);
         } else {
             res.status(200).send(storeDTO.items);
@@ -48,6 +48,7 @@ storeRoute.post("/", (req, res) => {
     try
     {
         const newStore = new store();
+        newStore.save();
         res.status(201).send({ id: newStore._id }); 
     }
     catch
@@ -73,19 +74,21 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
     catch
     {
         res.sendStatus(500);
-    }
+    }   
 });
 
-storeRoute.post("/:id/items", json, (req, res) => {
+storeRoute.post("/:id/items", json, async (req, res) => {
     try
     {
+        const id = req.params.id;
         const { name } = req.body;
 
-        const newId = new item({ name, icon: name.extension() });
-        if (newId)
-        {
-            res.status(201).send(newId._id);
-        }
+        const newItem = new item({ name, icon: name.extension() });
+    
+        const storeDTO = await store.findOne({ _id: mongoose.Types.ObjectId(id) }).exec();
+        storeDTO.items.push(newItem);
+        storeDTO.save();
+        res.status(201).send({ id: newItem._id, icon: newItem.icon });
     }
     catch
     {
