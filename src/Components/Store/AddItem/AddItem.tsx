@@ -23,17 +23,27 @@ const AddItem = (props: IAddItem) => {
     }
 
     const LoadFile = () => {
-        if (fileInput.current && form.current)
+        if (fileInput.current && fileInput.current.files && props.Id)
         {
-            if (fileInput.current.files)
-            {
-                form.current.submit();
-            }
+            const name = fileInput.current.files[0].name;
+            props.AddItem(props.Id, name, (itemId: string) => {
+
+                if (form.current)
+                {
+                    const formData = new FormData(form.current);
+                    
+                    fetch(`${process.env["REACT_APP_API"]}/stores/${props.Id}/items/${itemId}`,
+                    {
+                        method: "POST",
+                        body: formData
+                    });
+                }
+            });
         }
     }
 
     return(
-        <form ref={form} action={`/${props.Id}/items`} method="post" encType="multipart/form-data">
+        <form ref={form} method="post" encType="multipart/form-data">
             <BlockItem type="button" onClick={SelectFile} onMouseOver={() => ChangeImage(true)} onMouseOut={() => ChangeImage(false)}>
                 <div>
                     <img ref={plusImage} src={plus} height={100} width={100} alt="Add file" />

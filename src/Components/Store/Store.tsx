@@ -1,9 +1,9 @@
 import React from "react";
 
-import AddItem from "./AddItem/AddItem";
 import IStore from "./Interfaces/IStore";
 import { BlockStore } from "./StoreStyle";
 import StoreItem from "./StoreItem/StoreItem";
+import AddItemContainer from "./AddItem/AddItemContainer";
 
 const Store = (props: IStore) => {
 
@@ -17,7 +17,7 @@ const Store = (props: IStore) => {
             {
                 props.Items && props.Items.map((item, key) => <StoreItem key={key} {...item} />)
             }
-            <AddItem Id={props.Id} />
+            <AddItemContainer />
         </BlockStore>
     )
 };
