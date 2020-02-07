@@ -1,12 +1,13 @@
 require("../helpers/stringExtensions");
 
 const fs = require("fs");
-const mongoose = require("mongoose");
 const multer = require("multer");
+const mongoose = require("mongoose");
 const express = require("express");
 
 const { item } = require("../models/item");
 const { store } = require("../models/store");
+const checkStore = require("../middlewares/checkStore");
 
 const upload = multer({
     storage: multer.diskStorage({
@@ -96,6 +97,7 @@ storeRoute.post("/:id/items", json, async (req, res) => {
     }
 });
 
+storeRoute.use("/:id/items/:itemId", checkStore);
 storeRoute.post("/:id/items/:itemId", upload.single("file"), async (req, res) => {
     try
     {
