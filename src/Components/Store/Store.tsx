@@ -15,7 +15,7 @@ const Store = (props: IStore) => {
     return(
         <BlockStore>
             {
-                props.Items && props.Items.map((item, key) => <StoreItem key={key} {...item} />)
+                props.Items && props.Items.map((item, key) => <StoreItem key={key} StoreId={props.Id} {...item} />)
             }
             <AddItemContainer />
         </BlockStore>

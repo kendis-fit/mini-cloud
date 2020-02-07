@@ -18,4 +18,8 @@ export const BlockItem = styled(BaseBlockItem)`
         padding: 10px;
         cursor: pointer;
     }
+
+    iframe {
+        display: none;
+    }
 `;
