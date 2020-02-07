@@ -30,17 +30,17 @@ export default class StoreApi
         }
     }
 
-    public static GetStore(Id: string)
+    public static GetStore(id: string)
     {
         return async (dispatch: any) => {
             try
             {
-                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${Id}`);
+                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}`);
 
                 if (response.status === 200)
                 {
                     const result = await response.json();
-                    dispatch(InitStore({ Id, Items: result }));
+                    dispatch(InitStore({ Id: id, Items: result }));
                 }
                 else if (response.status === 404)
                 {
@@ -58,14 +58,14 @@ export default class StoreApi
         }
     }
 
-    public static AddItem(Id: string, Name: string, GetId?: (ItemId: string) => void)
+    public static AddItem(id: string, name: string, GetId?: (itemId: string) => void)
     {
         return async (dispatch: any) => {
             try
             {
-                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${Id}/items`, {
+                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items`, {
                     method: "POST",
-                    body: JSON.stringify({ name: Name }),
+                    body: JSON.stringify({ name }),
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -74,7 +74,7 @@ export default class StoreApi
                 {
                     const result = await response.json();
                     GetId?.(result.id);
-                    dispatch(AddItem({ _id: result.id, name: Name, icon: result.icon }));
+                    dispatch(AddItem({ _id: result.id, name: name, icon: result.icon }));
                 }
                 else
                 {
