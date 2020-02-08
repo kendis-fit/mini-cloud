@@ -30,7 +30,7 @@ const StoreReducer = (state: IStore = initStore, action: StoreTypes) => {
         case REMOVE_ITEM:
             return {
                 ...state,
-                Items: state.Items ? state.Items.filter(i => i._id === action.value as string) : undefined
+                Items: state.Items ? state.Items.filter(i => i._id !== action.value as string) : undefined
             }
         default:
             return state;
