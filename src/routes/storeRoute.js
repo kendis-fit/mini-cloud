@@ -1,10 +1,9 @@
 require("../helpers/stringExtensions");
 
 const fs = require("fs");
+const path = require("path");
 const multer = require("multer");
 const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
 
 const { item } = require("../models/item");
 const { store } = require("../models/store");
@@ -14,7 +13,7 @@ const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
             const { id } = req.params;
-            const p = path.resolve(`${__dirname}/../stores/${id}`);
+            const p = path.resolve(`${__dirname}/../../stores/${id}`);
             if (!fs.existsSync(p)) {
                 fs.mkdirSync(p);
             }
@@ -33,7 +32,7 @@ storeRoute.get("/:id", async (req, res) => {
     try
     {
         const id = req.params.id;
-        const storeDTO = await store.findOne({ _id: mongoose.Types.ObjectId(id)}).lean().exec();
+        const storeDTO = await store.findOne({ _id: id }).lean().exec();
         if (!storeDTO || !storeDTO.items.length === 0) {
             res.sendStatus(404);
         } else {
@@ -73,7 +72,7 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
         if (!file) {
             res.sendStatus(404);
         } else {
-            const p = path.resolve(`${__dirname}/../stores/${id}/${itemId}.${file.icon}`);
+            const p = path.resolve(`${__dirname}/../../stores/${id}/${itemId}.${file.icon}`);
             res.sendFile(p);
         }
     }
@@ -91,7 +90,7 @@ storeRoute.post("/:id/items", json, async (req, res) => {
 
         const newItem = new item({ name, icon: name.extension() });
     
-        const storeDTO = await store.findOne({ _id: mongoose.Types.ObjectId(id) }).exec();
+        const storeDTO = await store.findOne({ _id: id }).exec();
         storeDTO.items.push(newItem);
         storeDTO.save();
         res.status(201).send({ id: newItem._id, icon: newItem.icon });
@@ -110,15 +109,40 @@ storeRoute.post("/:id/items/:itemId", upload.single("file"), async (req, res) =>
         
         if (!file)
         {
-            const itemId = req.params.itemId;
-
-            await item.findOneAndDelete({ id: itemId });
+            const { id, itemId } = req.params;
+            await store.updateOne({ _id: id }, { $pull: { items: { _id: itemId } } });
+            
             res.sendStatus(400);
         }
         else
         {
             res.sendStatus(201);
         }
+    }
+    catch
+    {
+        res.sendStatus(500);
+    }
+});
+
+storeRoute.delete("/:id/items/:itemId", async (req, res) => {
+    try
+    {
+        const { id, itemId } = req.params;
+
+        const storeDTO = await store.findOne({ _id: id }).exec();
+        const file = storeDTO.items.find(i => {
+            return i._id == itemId;
+        });
+
+        await store.updateOne({ _id: id }, { $pull: { items: { _id: itemId } } });
+        
+        const p = path.resolve(`${__dirname}/../../stores/${id}/${itemId}.${file.icon}`);
+        if (fs.existsSync(p))
+        {
+            fs.unlinkSync(p);
+        }
+        res.sendStatus(200);
     }
     catch
     {
