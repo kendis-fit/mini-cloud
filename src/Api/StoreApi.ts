@@ -98,7 +98,7 @@ export default class StoreApi
                 });
                 if (response.ok)
                 {
-                    dispatch(RemoveItem(id));
+                    dispatch(RemoveItem(itemId));
                 }
                 else
                 {
