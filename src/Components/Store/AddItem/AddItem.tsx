@@ -21,38 +21,10 @@ const AddItem = (props: IAddItem) => {
         fileInput.current?.click();
     }
 
-    const LoadFile = () => {
-        if (fileInput.current && fileInput.current.files && props.Id)
+    const LoadFiles = () => {
+        if (fileInput.current && fileInput.current.files)
         {
-            const id = props.Id;
-            const files = fileInput.current.files;
-            const countFiles = files.length;
-
-            for (let i = 0; i < countFiles; ++i)
-            {
-                const file = files[i];
-                const name = files[i].name;
-
-                props.AddItem(id, name, async (itemId: string) => {
-
-                    if (id)
-                    {
-                        const formData = new FormData();
-                        formData.append("file", file, name);
-                        
-                        const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items/${itemId}`,
-                        {
-                            method: "POST",
-                            body: formData
-                        });
-
-                        if (!response.ok)
-                        {
-                            props.RemoveItem(id, itemId);
-                        }
-                    }
-                });
-            }
+            props.LoadFiles(fileInput.current.files);
         }
     }
 
@@ -62,7 +34,7 @@ const AddItem = (props: IAddItem) => {
                 <img ref={plusImage} src={plus} height={100} width={100} alt="Add file" />
             </div>
             <label>Add file</label>
-            <input name="file" onChange={LoadFile} ref={fileInput} type="file" multiple />
+            <input name="file" onChange={LoadFiles} ref={fileInput} type="file" multiple />
         </BlockItem>
     );
 }
