@@ -7,7 +7,6 @@ import plusHover from "../../../Images/plus-hover.png";
 
 const AddItem = (props: IAddItem) => {
 
-    const form = createRef<HTMLFormElement>();
     const plusImage = createRef<HTMLImageElement>();
     const fileInput = createRef<HTMLInputElement>();
 
@@ -25,40 +24,46 @@ const AddItem = (props: IAddItem) => {
     const LoadFile = () => {
         if (fileInput.current && fileInput.current.files && props.Id)
         {
-            const name = fileInput.current.files[0].name;
             const id = props.Id;
+            const files = fileInput.current.files;
+            const countFiles = files.length;
 
-            props.AddItem(props.Id, name, async (itemId: string) => {
+            for (let i = 0; i < countFiles; ++i)
+            {
+                const file = files[i];
+                const name = files[i].name;
 
-                if (form.current && id)
-                {
-                    const formData = new FormData(form.current);
-                    
-                    const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items/${itemId}`,
+                props.AddItem(id, name, async (itemId: string) => {
+
+                    if (id)
                     {
-                        method: "POST",
-                        body: formData
-                    });
+                        const formData = new FormData();
+                        formData.append("file", file, name);
+                        
+                        const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items/${itemId}`,
+                        {
+                            method: "POST",
+                            body: formData
+                        });
 
-                    if (!response.ok)
-                    {
-                        props.RemoveItem(id, itemId);
+                        if (!response.ok)
+                        {
+                            props.RemoveItem(id, itemId);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     }
 
     return(
-        <form ref={form} method="post" encType="multipart/form-data">
-            <BlockItem type="button" onClick={SelectFile} onMouseOver={() => ChangeImage(true)} onMouseOut={() => ChangeImage(false)}>
-                <div>
-                    <img ref={plusImage} src={plus} height={100} width={100} alt="Add file" />
-                </div>
-                <label>Add file</label>
-                <input name="file" onChange={LoadFile} ref={fileInput} type="file" />
-            </BlockItem>
-        </form>
+        <BlockItem type="button" onClick={SelectFile} onMouseOver={() => ChangeImage(true)} onMouseOut={() => ChangeImage(false)}>
+            <div>
+                <img ref={plusImage} src={plus} height={100} width={100} alt="Add file" />
+            </div>
+            <label>Add file</label>
+            <input name="file" onChange={LoadFile} ref={fileInput} type="file" multiple />
+        </BlockItem>
     );
 }
 
