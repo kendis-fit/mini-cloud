@@ -2,8 +2,9 @@ require("../helpers/stringExtensions");
 
 const fs = require("fs");
 const multer = require("multer");
-const mongoose = require("mongoose");
 const express = require("express");
+const path = require("path");
+const mongoose = require("mongoose");
 
 const { item } = require("../models/item");
 const { store } = require("../models/store");
@@ -13,11 +14,11 @@ const upload = multer({
     storage: multer.diskStorage({
         destination: (req, file, callback) => {
             const { id } = req.params;
-            const path = `${__dirname}/../stores/${id}`;
-            if (!fs.existsSync(path)) {
-                fs.mkdirSync(path);
+            const p = path.resolve(`${__dirname}/../stores/${id}`);
+            if (!fs.existsSync(p)) {
+                fs.mkdirSync(p);
             }
-            callback(null, path);
+            callback(null, p);
         },
         filename: (req, file, callback) => {
             const itemId = req.params.itemId;
@@ -63,13 +64,17 @@ storeRoute.get("/:id/items/:itemId", async (req, res) => {
     {
         const { id, itemId } = req.params;
 
-        const projection = { _id: 0, extension: 1 };
-        const itemAsFile = await item.findOne({ _id: itemId }, projection).lean().exec();
+        const storeDTO = await store.findOne({ _id: id }).lean().exec();
+        const file = storeDTO.items.find(i => {
+            const test = i._id.toString();
+            return test == itemId;
+        });
 
-        if (!itemAsFile) {
+        if (!file) {
             res.sendStatus(404);
         } else {
-            res.sendFile(`${__dirname}/src/stores/${id}/item/${itemId}.${itemAsFile.icon}`);
+            const p = path.resolve(`${__dirname}/../stores/${id}/${itemId}.${file.icon}`);
+            res.sendFile(p);
         }
     }
     catch
