@@ -1,4 +1,4 @@
-import { CreateStore, AddItem, InitStore } from "../Reducers/Store/StoreActions";
+import { CreateStore, AddItem, InitStore, RemoveItem } from "../Reducers/Store/StoreActions";
 
 export default class StoreApi
 {
@@ -88,5 +88,27 @@ export default class StoreApi
         }
     }
 
-    
+    public static RemoveItem(id: string, itemId: string)
+    {
+        return async (dispatch: any) => {
+            try
+            {
+                const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items/${itemId}`, {
+                    method: "DELETE"
+                });
+                if (response.ok)
+                {
+                    dispatch(RemoveItem(id));
+                }
+                else
+                {
+                    throw new Error("Remove item failed");
+                }
+            }
+            catch (error)
+            {
+                alert(error.message);
+            }
+        }
+    }
 }

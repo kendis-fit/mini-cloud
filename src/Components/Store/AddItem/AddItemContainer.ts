@@ -9,7 +9,8 @@ const mapStateToProps = (state: IRootState) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-    AddItem: (Id: string, Name: string, GetId?: (ItemId: string) => void) => dispatch(StoreApi.AddItem(Id, Name, GetId))
+    AddItem: (id: string, name: string, GetId?: (itemId: string) => void) => dispatch(StoreApi.AddItem(id, name, GetId)),
+    RemoveItem: (id: string, itemId: string) => dispatch(StoreApi.RemoveItem(id, itemId))
 });
 
 const AddItemContainer = connect(mapStateToProps, mapDispatchToProps)(AddItem);

@@ -1,5 +1,6 @@
 export default interface IAddItem
 {
     Id?: string;
-    AddItem: (Id: string, Name: string, GetId?: (ItemId: string) => void) => void;
+    AddItem: (id: string, name: string, GetId?: (itemId: string) => void) => void;
+    RemoveItem: (id: string, itemId: string) => void;
 }

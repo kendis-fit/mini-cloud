@@ -26,17 +26,24 @@ const AddItem = (props: IAddItem) => {
         if (fileInput.current && fileInput.current.files && props.Id)
         {
             const name = fileInput.current.files[0].name;
-            props.AddItem(props.Id, name, (itemId: string) => {
+            const id = props.Id;
 
-                if (form.current)
+            props.AddItem(props.Id, name, async (itemId: string) => {
+
+                if (form.current && id)
                 {
                     const formData = new FormData(form.current);
                     
-                    fetch(`${process.env["REACT_APP_API"]}/stores/${props.Id}/items/${itemId}`,
+                    const response = await fetch(`${process.env["REACT_APP_API"]}/stores/${id}/items/${itemId}`,
                     {
                         method: "POST",
                         body: formData
                     });
+
+                    if (!response.ok)
+                    {
+                        props.RemoveItem(id, itemId);
+                    }
                 }
             });
         }

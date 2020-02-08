@@ -1,5 +1,6 @@
 import IAddStore from "../Reducers/Store/Interfaces/IAddStore";
 import IInitStore from "../Reducers/Store/Interfaces/IInitStore";
+import IRemoveItem from "../Reducers/Store/Interfaces/IRemoveItem";
 import ICreateStore from "../Reducers/Store/Interfaces/ICreateStore";
 
-export type StoreTypes = ICreateStore | IAddStore | IInitStore;
+export type StoreTypes = ICreateStore | IAddStore | IInitStore | IRemoveItem;
