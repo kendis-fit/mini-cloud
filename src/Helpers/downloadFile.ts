@@ -2,6 +2,11 @@ export default async (url: string, name: string) => {
     try
     {
         const response = await fetch(url);
+        if (!response.ok)
+        {
+            throw new Error("File can't be downloaded");
+        }
+
         const blob = await response.blob();
         
         const href = window.URL.createObjectURL(blob);
