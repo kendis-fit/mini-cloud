@@ -13,6 +13,10 @@ export const BlockItem = styled(BaseBlockItem)`
         color: white;
     }
 
+    div {
+        padding-top: 40px;
+    }
+
     label {
         display: block;
         margin-top: 5px;

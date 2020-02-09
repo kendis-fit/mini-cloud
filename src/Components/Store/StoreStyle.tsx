@@ -11,7 +11,7 @@ export const BlockStore = styled.div`
     height: calc(100vh - ${Sizes.HeaderHeight});
 `;
 
-export const BaseBlockItem = styled.button`
+export const BaseBlockItem = styled.div`
     border-radius: 5px;
     color: white;
 
@@ -21,4 +21,6 @@ export const BaseBlockItem = styled.button`
     margin: 25px;
 
     cursor: pointer;
+
+    text-align: center;
 `;

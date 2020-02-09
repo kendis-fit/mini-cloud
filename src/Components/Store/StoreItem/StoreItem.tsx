@@ -24,7 +24,9 @@ const StoreItem = (props: IStoreItem) => {
 
     return(
         <BlockItem title={props.name} onClick={DownloadFile}>
-            <button onClick={ConfirmRemove}>&times;</button>
+            <div>
+                <button onClick={ConfirmRemove}>...</button>
+            </div>
             <div>
                 <img src={`${process.env["REACT_APP_API"]}/images/icons/${props.icon}.png`} height={100} width={100} alt="file" />
             </div>
