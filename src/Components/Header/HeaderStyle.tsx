@@ -14,3 +14,11 @@ export const BlockHeader = styled.header`
     align-items: center;
     justify-content: space-around;
 `;
+
+export const Logo = styled.div`
+
+    @media screen and (max-width: 500px) {
+        display: none;
+    }
+
+`;

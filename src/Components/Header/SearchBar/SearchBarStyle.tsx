@@ -8,10 +8,14 @@ export const SearchTextBox = styled.input`
     color: white;
 
     font-size: 16px;
+    
+    padding-left: 5px;
 
     ::placeholder {
         opacity: 1;
     }
 
-    padding-left: 5px;
+    @media screen and (max-width: 500px) {
+        width: 200px;
+    }
 `;

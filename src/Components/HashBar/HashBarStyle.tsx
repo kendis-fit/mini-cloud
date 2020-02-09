@@ -6,7 +6,6 @@ export const HashBox = styled.input.attrs(() => ({ readOnly: true }))`
     margin-right: 5px;
     padding: 5px;
 
-    /* border-radius: 5px; */
     border: 2px solid gray;
 
     height: 25px;
