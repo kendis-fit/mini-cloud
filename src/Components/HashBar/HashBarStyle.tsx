@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import Sizes from "../../Constants/Sizes";
 import Colors from "../../Constants/Colors";
 
 export const HashBox = styled.input.attrs(() => ({ readOnly: true }))`
@@ -15,6 +16,16 @@ export const HashBox = styled.input.attrs(() => ({ readOnly: true }))`
 `;
 
 export const BlockHashBox = styled.div`
+    position: fixed;
+    top: ${Sizes.HeaderHeight};
+    left: 0;
+
+    width: 100vw;
+
     border-bottom: 4px dashed ${Colors.Pink};
     padding: 10px;
+
+    background: white;
+
+    z-index: 5;
 `;

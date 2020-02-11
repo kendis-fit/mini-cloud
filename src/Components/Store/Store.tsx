@@ -1,30 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
-import IStore from "./Interfaces/IStore";
 import AddItem from "./AddItem/AddItem";
-import { BlockStore } from "./StoreStyle";
+import IStore from "./Interfaces/IStore";
+import { FlexBlock } from "../Styles/Block";
+import { BlockStore, BlockUploadFiles } from "./StoreStyle";
 import StoreItemContainer from "./StoreItem/StoreItemContainer";
 
 const Store = (props: IStore) => {
+    
+    const [showUploadFiles, setShowUploadFiles] = useState(false);
 
-    if (typeof props.Id === "undefined")
-    {
-        return <div>Empty</div>
-    }
-
-    const LoadFiles = (files: FileList) => {
+    const LoadFiles = (files: FileList, IsLoad?: () => void) => {
         if (props.Id)
         {
             const id = props.Id;
             const countFiles = files.length;
-
+            
             for (let i = 0; i < countFiles; ++i)
             {
                 const file = files[i];
                 const name = files[i].name;
-
+                
                 props.AddItem?.(id, name, async (itemId: string) => {
-
+                    
                     if (id)
                     {
                         const formData = new FormData();
@@ -35,7 +33,7 @@ const Store = (props: IStore) => {
                             method: "POST",
                             body: formData
                         });
-
+                        
                         if (!response.ok)
                         {
                             props.RemoveItem?.(id, itemId);
@@ -43,25 +41,45 @@ const Store = (props: IStore) => {
                     }
                 });
             }
+
+            IsLoad?.();
         }
     }
-
+    
     const Drop = (e: any) => {
         e.preventDefault();
-        LoadFiles(e.dataTransfer.files);
+        LoadFiles(e.dataTransfer.files, () => setShowUploadFiles(false));
     }
-
-    const DragOverHandler = (e: any) => {
+    
+    const DragOver = (e: any) => {
         e.preventDefault();
+        setShowUploadFiles(true);
     }
-
+    
+    const DragLeave = (e: any) => {
+        e.preventDefault();
+        setShowUploadFiles(false);
+    }
+    
+    if (typeof props.Id === "undefined")
+    {
+        return <div>Empty</div>
+    }
+    
     return(
-        <BlockStore onDrop={Drop} onDragOver={DragOverHandler}>
+        <>
+            <BlockStore onDragOver={DragOver}>
+                {
+                    props.Items && props.Items.map((item, key) => <StoreItemContainer key={key} StoreId={props.Id} {...item} />)
+                }
+                <AddItem LoadFiles={LoadFiles} />
+            </BlockStore>
             {
-                props.Items && props.Items.map((item, key) => <StoreItemContainer key={key} StoreId={props.Id} {...item} />)
+                showUploadFiles && <BlockUploadFiles onDrop={Drop} onDragOver={(e) => e.preventDefault()} onDragLeave={DragLeave}>
+                    <FlexBlock>Drop files to upload...</FlexBlock> 
+                </BlockUploadFiles>
             }
-            <AddItem LoadFiles={LoadFiles} />
-        </BlockStore>
+        </>
     )
 };
 

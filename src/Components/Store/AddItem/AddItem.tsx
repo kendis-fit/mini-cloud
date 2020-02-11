@@ -29,7 +29,7 @@ const AddItem = (props: IAddItem) => {
     }
 
     return(
-        <BlockItem type="button" onClick={SelectFile} onMouseOver={() => ChangeImage(true)} onMouseOut={() => ChangeImage(false)}>
+        <BlockItem onClick={SelectFile} onMouseOver={() => ChangeImage(true)} onMouseOut={() => ChangeImage(false)}>
             <div>
                 <img ref={plusImage} src={plus} height={100} width={100} alt="Add file" />
             </div>
