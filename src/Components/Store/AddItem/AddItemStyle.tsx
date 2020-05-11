@@ -1,0 +1,31 @@
+import styled from "styled-components";
+
+import { BaseBlockItem } from "../StoreStyle";
+import Colors from "../../../Constants/Colors";
+
+export const BlockItem = styled(BaseBlockItem)`
+    border: 2px solid ${Colors.Gray};
+    background: white;
+    color: black;
+
+    :hover {
+        background: ${Colors.Gray};
+        color: white;
+    }
+
+    div {
+        padding-top: 40px;
+    }
+
+    label {
+        display: block;
+        margin-top: 5px;
+        font-size: 16px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    input[type='file'] {
+        display: none;
+    }
+`;
