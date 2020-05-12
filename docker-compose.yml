@@ -15,19 +15,17 @@ services:
             - PORT=5000
             - CONNECTION_STRING=mongodb://mongo:27017
     client:
-        image: node:12.14.1
         restart: always
-        working_dir: /home/client
-        volumes:
-            - ./client:/home/client
+        build: 
+            context: client
+            dockerfile: Dockerfile
+            args: 
+                - REACT_APP_API=http://localhost:5000
         ports:
-            - "3000:3000"
-        command: "npm start"
-        environment: 
-            - REACT_APP_API=http://localhost:5000
+            - 3000:3000
     db:
         container_name: mongo
         image: mongo:4.2
         restart: always
         ports:
-            - "27017:27017"
+            - 27017:27017
