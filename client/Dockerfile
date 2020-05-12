@@ -1,11 +1,11 @@
 FROM node:12.16.3-alpine3.11 as build
 WORKDIR /app
-ARG REACT_APP
+ARG REACT_APP_API
 
 COPY . .
 RUN npm install
 
-RUN npm run build
+RUN REACT_APP_API=${REACT_APP_API} npm run build
 
 FROM nginx:stable-alpine
 COPY --from=build /app/build /usr/share/nginx/html

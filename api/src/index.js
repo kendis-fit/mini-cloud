@@ -33,5 +33,5 @@ app.use("/images", express.static(`${__dirname}/images`));
 app.use("/stores", storeRoute);
 
 app.listen(port, () => {
-    console.log(`Server has bee running by port ${port}`);
+    console.log(`Server has been running by port ${port}`);
 });

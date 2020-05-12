@@ -1,14 +1,12 @@
 version: "3.4"
 services: 
     api:
-        image: node:12.14.1
         restart: always
-        working_dir: /home/api
-        volumes:
-            - ./api:/home/api
+        build:
+            context: api
+            dockerfile: Dockerfile
         ports:
-            - "5000:5000"
-        command: "npm start"
+            - 5000:5000
         depends_on: 
             - db
         environment: 
@@ -22,7 +20,7 @@ services:
             args: 
                 - REACT_APP_API=http://localhost:5000
         ports:
-            - 3000:3000
+            - 3000:80
     db:
         container_name: mongo
         image: mongo:4.2
